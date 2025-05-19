@@ -1,54 +1,48 @@
 <div>
     {{-- The whole world belongs to you. --}}
-    <div class="flex flex-col gap-4">
-        <h1 class="text-xl font-semibold">Company</h1>
-        <div class="space-y-4"></div>
-        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            @foreach ($companies as $company)
-                <div class="rounded-lg border border-neutral-200 bg-white shadow-sm dark:border-neutral-700 dark:bg-neutral-800">
-                    <div class="class aspect-video bg-neutral-200 rounded-t-lg"></div>
-                    <div class="p-4">
-                        <h2 class="text-lg font-semibold">{{ $company->nama }}</h2>
-                        <p class="text-sm text-neutral-500">{{ $company->email }}</p>
-                        <p class="text-sm text-neutral-500">{{ $company->kontak }}</p>
-                        <p class="text-sm text-neutral-500">{{ $company->alamat }}</p>
-                        <p class="text-sm text-neutral-500">{{ $company->website }}</p>
-                        <button
-                            class="mt-2 inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                            wire:click="edit({{ $company->id }})">
-                            PKL sekarang
-                        </button>
-                    </div>
-
-                </div>
-            @endforeach
+    <div class="flex flex-col gap-2">
+        <h2>List of companies</h2>
+        <div class="flex gap-4">
+            <div class="flex-1">
+                <input type="text" wire:model="search" placeholder="Search..." class="w-full px-4 py-2 border border-gray-400 rounded-lg">
+            </div>
+            <div>
+                <button wire:click="openModal" class="px-4 py-2 text-white bg-gray-500 rounded-lg">Add Company</button>
+            </div>
         </div>
-        {{-- <div class="grid gap-4">
+        <div class="grid gap-4 mt-4">
             <table class="w-full table-auto border border-gray-400 rounded-xl">
                 <thead class="">
                     <tr>
-                        <th class="px-4 py-2 text-left">ID</th>
-                        <th class="px-4 py-2 text-left">Name</th>
-                        <th class="px-4 py-2 text-left">Email</th>
-                        <th class="px-4 py-2 text-left">Phone</th>
-                        <th class="px-4 py-2 text-left">Address</th>
-                        <th class="px-4 py-2 text-left">website</th>
+                        <th class="px-4 py-2 text-left border-e border-gray-400">ID</th>
+                        <th class="px-4 py-2 text-left border-e border-gray-400">Name</th>
+                        <th class="px-4 py-2 text-left border-e border-gray-400">Email</th>
+                        <th class="px-4 py-2 text-left border-e border-gray-400">Phone</th>
+                        <th class="px-4 py-2 text-left border-e border-gray-400">Address</th>
+                        <th class="px-4 py-2 text-left border-e border-gray-400">website</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($companies as $company)
                         <tr class="border-t border-gray-400">
-                            <td class="px-4 py-2">{{ $company->id }}</td>
-                            <td class="px-4 py-2">{{ $company->nama }}</td>
-                            <td class="px-4 py-2">{{ $company->email }}</td>
-                            <td class="px-4 py-2">{{ $company->kontak }}</td>
-                            <td class="px-4 py-2">{{ $company->alamat }}</td>
-                            <td class="px-4 py-2">{{ $company->website }}</td>
+                            <td class="px-4 py-2 border-e border-gray-400">{{ $company->id }}</td>
+                            <td class="px-4 py-2 border-e border-gray-400">{{ $company->nama }}</td>
+                            <td class="px-4 py-2 border-e border-gray-400">{{ $company->email }}</td>
+                            <td class="px-4 py-2 border-e border-gray-400">{{ $company->kontak }}</td>
+                            <td class="px-4 py-2 border-e border-gray-400">{{ $company->alamat }}</td>
+                            <td class="px-4 py-2 border-e border-gray-400">{{ $company->website }}</td>
                         </tr>
                     @endforeach
                 </tbody>
-
             </table>
-        </div> --}}
+        </div>
     </div>
+    @if ($isOpen)
+        <div class="fixed inset-0 backdrop-blur-xs flex items-center justify-center z-50 " x-data="{ open: @entangle('isOpen') }" x-show="open" x-cloak>
+            <div class="bg-neutral-800 w-full max-w-lg p-6 rounded shadow-lg relative">
+                <!-- Dynamically include the Create component here -->
+                <livewire:company.create />
+            </div>
+        </div>
+    @endif
 </div>
