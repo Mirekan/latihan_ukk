@@ -50,12 +50,34 @@ class PklResource extends Resource
         return $table
             ->columns([
                 //
+                Tables\Columns\TextColumn::make('siswa.nama')
+                    ->label('Nama Siswa')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('guru.nama')
+                    ->label('Nama Guru')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('industri.nama')
+                    ->label('Industri')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('mulai')
+                    ->label('Tanggal Mulai')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('selesai')
+                    ->label('Tanggal Selesai')
+                    ->sortable()
+                    ->searchable(),
+                // Tables\Columns\TextColumn::make('siswa.status_lapor_pkl')
+                //     ->label('Status Lapor PKL')
+                //     ->badge(true)
+                //     ->formatStateUsing(fn($record): string => $record->status_lapor_pkl == 1 ? 'Lapor' : 'Belum Lapor')
+                //     ->color(fn($record): string => $record->status_lapor_pkl == 1 ? 'success' : 'danger'),
             ])
             ->filters([
                 //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -68,6 +90,7 @@ class PklResource extends Resource
     {
         return [
             //
+            
         ];
     }
 

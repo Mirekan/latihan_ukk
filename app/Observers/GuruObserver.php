@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Guru;
+use App\Models\User;
 
 class GuruObserver
 {
@@ -28,7 +29,21 @@ class GuruObserver
     public function updated(Guru $guru): void
     {
         //
-        
+        $user = User::where('email', $guru->email)->first();
+        if ($user) {
+            $user->update([
+                'name' => $guru->nama,
+                'email' => $guru->email,
+            ]);
+        } else {
+            $user = User::create([
+                'name' => $guru->nama,
+                'email' => $guru->email,
+                'password' => bcrypt($guru->nip),
+                'role' => 'guru',
+            ]);
+            $user->assignRole('guru');
+        }
     }
 
     /**
@@ -37,6 +52,12 @@ class GuruObserver
     public function deleted(Guru $guru): void
     {
         //
+        $user = User::where('email', $guru->email)->first();
+        if ($user) {
+            $user->delete();
+        } else {
+            return;
+        }
     }
 
     /**

@@ -8,21 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pkl extends Model
 {
     /** @use HasFactory<\Database\Factories\PklFactory> */
-    use HasFactory;
-
-    public function siswa()
-    {
-        return $this->belongsTo(Siswa::class);
-    }
-    public function industri()
-    {
-        return $this->belongsTo(Industri::class);
-    }
-    public function guru()
-    {
-        return $this->belongsTo(Guru::class);
-    }
-
+    use HasFactory; 
     /**
      * The attributes that are mass assignable.
      *
@@ -36,4 +22,17 @@ class Pkl extends Model
         'mulai',
         'selesai',
     ];
+
+    public function siswa()
+    {
+        return $this->belongsTo(Siswa::class);
+    }
+    public function industri()
+    {
+        return $this->belongsTo(Industri::class);
+    }
+    public function guru()
+    {
+        return $this->belongsTo(Guru::class);
+    }
 }

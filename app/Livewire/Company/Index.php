@@ -10,13 +10,15 @@ use App\Models\Industri;
 class Index extends Component
 {
     public $isOpen = false;
-    public $companyId, $companyName, $companyAddress, $companyContact, $companyEmail, $companyWebsite;
+    public $search = '';
     public $listeners = ['openModal', 'closeModal'];
-
-
     public function render()
     {
-        $companies = Industri::paginate(10);
+        $companies = Industri::where('nama', 'like', '%' . $this->search . '%')
+            ->orWhere('email', 'like', '%' . $this->search . '%')
+            ->orWhere('alamat', 'like', '%' . $this->search . '%')
+            ->orWhere('website', 'like', '%' . $this->search . '%')
+            ->paginate(10);
         return view('livewire.company.index', [
             'companies' => $companies,
             'isOpen' => $this->isOpen,

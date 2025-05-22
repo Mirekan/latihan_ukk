@@ -7,7 +7,7 @@ use App\Models\Industri;
 
 class Create extends Component
 {
-    public $companyId, $companyName, $companyAddress, $companyContact, $companyEmail, $companyWebsite;
+    public $name, $address, $contact, $email, $website, $bidang;
     public function mount()
     {
         $this->resetInputFields();
@@ -18,36 +18,39 @@ class Create extends Component
         $this->resetInputFields();
         $this->dispatch('closeModal');
     }
-
     public function resetInputFields()
     {
-        $this->companyId = '';
-        $this->companyName = '';
-        $this->companyAddress = '';
-        $this->companyContact = '';
-        $this->companyEmail = '';
-        $this->companyWebsite = '';
+        $this->name = '';
+        $this->address = '';
+        $this->contact = '';
+        $this->email = '';
+        $this->website = '';
+        $this->bidang = '';
     }
 
     public function store()
     {
         $this->validate([
-            'companyName' => 'required',
-            'companyAddress' => 'required',
-            'companyContact' => 'required',
-            'companyEmail' => 'required|email',
-            'companyWebsite' => 'required|url',
+            'name' => 'required',
+            'address' => 'required',
+            'contact' => 'required',
+            'email' => 'required|email',
+            'website' => 'required|url',
+            'bidang' => 'required',
         ]);
 
-        Industri::updateOrCreate(['id' => $this->companyId], [
-            'nama' => $this->companyName,
-            'alamat' => $this->companyAddress,
-            'kontak' => $this->companyContact,
-            'email' => $this->companyEmail,
-            'website' => $this->companyWebsite,
+        Industri::create([
+            'nama' => $this->name,
+            'alamat' => $this->address,
+            'kontak' => $this->contact,
+            'email' => $this->email,
+            'website' => $this->website,
+            'bidang_usaha' => $this->bidang,
         ]);
 
-        session()->flash('message', $this->companyId ? 'Company updated successfully.' : 'Company created successfully.');
+        session()->flash('message', value: 'Company created successfully.');
+        $this->resetInputFields();
+        $this->dispatch('closeModal');
     }
     public function render()
     {
