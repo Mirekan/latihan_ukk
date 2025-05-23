@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pkl extends Model
 {
     /** @use HasFactory<\Database\Factories\PklFactory> */
-    use HasFactory; 
+    use HasFactory;
     /**
      * The attributes that are mass assignable.
      *
@@ -20,6 +20,7 @@ class Pkl extends Model
         'industri_id',
         'guru_id',
         'mulai',
+        'laporan',
         'selesai',
     ];
 
