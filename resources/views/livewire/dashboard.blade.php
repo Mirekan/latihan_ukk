@@ -1,6 +1,6 @@
-<div class="h-full w-full flex-1 flex flex-col gap-4 rounded-xl items-center">
+<div class="h-full w-full flex-1 flex flex-col gap-4 rounded-xl items-center justify-center">
     <div class="p-2 border-b border-gray-400 text-center">
-        <h1 class="text-2xl">Sistem Informasi Pengajuan PKL</h1>
+        <h1 class="text-2xl">Status Siswa</h1>
     </div>
     <div class="grid md:grid-cols-2 gap-4">
         <div class="p-4 gap-2 flex flex-col shadow-sm shadow-black/60 w-xs bg-gray-600 rounded-md">

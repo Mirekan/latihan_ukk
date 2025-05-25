@@ -1,5 +1,4 @@
 <div>
-    {{-- Close your eyes. Count to one. That is how long forever feels. --}}
     @if (session()->has('message'))
         <div class="bg-green-500 text-white p-4 rounded-lg mb-4">
             {{ session('message') }}
@@ -12,7 +11,7 @@
         </h2>
         <div class="p">
             @if ($siswa->status_lapor_pkl)
-                <div class="block bg-green-100 font-semibold text-green-400 p-4 rounded-lg w-full">Laporan PKL Anda sudah terkirim</div>
+                <div class="block bg-green-100 font-semibold text-green-400 p-4 rounded-lg w-full">Anda Sudah Mengumpulkan Laporan PKL</div>
             @else
                 <div class="block bg-red-100 font-semibold text-red-400 p-4 rounded-lg w-full">Anda Belum Mengumpulkan laporan PKL</div>
             @endif
@@ -21,9 +20,21 @@
             @if ($siswa->status_lapor_pkl)
                 {{-- to do --}}
                 <div class="flex flex-col gap-4">
-                    <label for="laporan" class="text-lg block">Laporan PKL Anda</label>
-                    <p>{{$pkl->laporan}}</p>
-                    <button type="button" wire:click='edit' class="bg-gray-400 hover:bg-gray-500 text-white py-1 rounded-md cursor-pointer">Edit</button>
+                    <div class="flex">
+                        <div>
+                            <h3 class="text-lg font-semibold">Laporan PKL Anda</h3>
+                        <p class="text-sm text-gray-500">Update Terakhir:  <span class="font-semibold">{{ $pkl->updated_at->format('d M Y H:i') }}</span></p>
+                        </div>
+                        <div class="ml-auto">
+                            <button wire:click="editReport"
+                                    class="bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded-md">
+                                Edit Laporan PKL
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-md border border-gray-300 md:min-h-48">
+                        <p class="text-sm">{{ $pkl->laporan }}</p>
+                    </div>
                 </div>
             @else
             <form wire:submit.prevent="addReport" class="flex flex-col gap-4">
