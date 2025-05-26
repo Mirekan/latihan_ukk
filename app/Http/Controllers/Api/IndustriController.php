@@ -14,7 +14,7 @@ class IndustriController extends Controller
     public function index()
     {
         //
-        $industries = Industri::all();
+        $industries = Industri::with('pkl')->get();
         return response()->json($industries);
     }
 
@@ -32,7 +32,7 @@ class IndustriController extends Controller
     public function show(string $id)
     {
         //
-        $industry = Industri::find($id);
+        $industry = Industri::with('pkl')->find($id);
         if (!$industry) {
             return response()->json(['message' => 'Industry not found'], 404);
         }

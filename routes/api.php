@@ -17,4 +17,7 @@ Route::post('/register', [AuthController::class, 'register'])
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('industry', App\Http\Controllers\Api\IndustriController::class);
+    Route::apiResource('internship', App\Http\Controllers\Api\PklController::class);
+    Route::apiResource('teacher', App\Http\Controllers\Api\GuruController::class);
+    Route::apiResource('student', App\Http\Controllers\Api\SiswaController::class);
 });
