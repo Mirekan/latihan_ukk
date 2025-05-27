@@ -6,20 +6,19 @@
         </div>
     @endif
     <div class="flex flex-col gap-2">
-        <h2>List of companies</h2>
+        <h2>Perusahaan Yang Terdaftar</h2>
         <div class="flex gap-4">
             <div class="flex-1">
                 <input type="text" wire:model.live="search" placeholder="Search..." class="w-full px-4 py-2 border border-gray-400 rounded-lg">
             </div>
             <div>
-                <button wire:click="openModal" class="px-4 py-2 text-white bg-gray-500 rounded-lg">Add Company</button>
+                <button wire:click="openModal" class="px-4 py-2 text-white bg-gray-500 rounded-lg">Tambah Perusahaan</button>
             </div>
         </div>
         <div class="grid gap-4 mt-4">
             <table class="w-full table-auto border border-gray-400 rounded-xl">
                 <thead class="">
                     <tr>
-                        <th class="px-4 py-2 text-left border-e border-gray-400">ID</th>
                         <th class="px-4 py-2 text-left border-e border-gray-400">Name</th>
                         <th class="px-4 py-2 text-left border-e border-gray-400">Email</th>
                         <th class="px-4 py-2 text-left border-e border-gray-400">Phone</th>
@@ -30,7 +29,6 @@
                 <tbody>
                     @forelse ($companies as $index => $company)
                         <tr class="border-t border-gray-400">
-                            <td class="px-4 py-2 border-e border-gray-400">{{ $index + 1 }}</td>
                             <td class="px-4 py-2 border-e border-gray-400">{{ $company->nama }}</td>
                             <td class="px-4 py-2 border-e border-gray-400">{{ $company->email }}</td>
                             <td class="px-4 py-2 border-e border-gray-400">{{ $company->kontak }}</td>

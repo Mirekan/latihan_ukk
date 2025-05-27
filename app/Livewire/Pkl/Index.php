@@ -46,20 +46,16 @@ class Index extends Component
             'status_lapor_pkl' => 1,
         ]);
 
-
-        dd([
-            'laporan' => $this->laporan,
-            'pkl' => $this->pkl,
-        ]);
-
         session()->flash('message', value: 'Laporan berhasil ditambahkan');
     }
 
     public function edit()
     {
-        $this->siswa = Siswa::where('email', $this->user->email)->first();
-        $this->siswa->update([
-            'status_lapor_pkl' => 0,
-        ]);
+        // $this->siswa = Siswa::where('email', $this->user->email)->first();
+        // $this->siswa->update([
+        //     'status_lapor_pkl' => 0,
+        // ]);
+
+
     }
 }
