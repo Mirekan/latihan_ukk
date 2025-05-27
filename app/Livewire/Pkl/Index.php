@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class Index extends Component
 {
-    public $isOpen = false;
+    public $isEditing = false;
     public $pkl, $industri, $guru, $siswa, $role, $user, $laporan;
     public function render()
     {
@@ -17,7 +17,6 @@ class Index extends Component
         $this->role = $this->user->roles->first();
         $this->industri = Industri::where('id', $this->siswa->pkl->pluck('industri_id'))->first();
         $this->pkl = $this->siswa->pkl->first();
-        // dd($this->pkl->laporan);
 
         return view('livewire.pkl.index', [
             'pkl' => $this->pkl,
@@ -49,13 +48,24 @@ class Index extends Component
         session()->flash('message', value: 'Laporan berhasil ditambahkan');
     }
 
-    public function edit()
+    public function editMode()
     {
-        // $this->siswa = Siswa::where('email', $this->user->email)->first();
-        // $this->siswa->update([
-        //     'status_lapor_pkl' => 0,
-        // ]);
+        $this->isEditing = true;
+    }
 
+    public function updateReport()
+    {
+        $this->validate([
+            'laporan' => 'required',
+        ]);
 
+        $this->pkl = $this->siswa->pkl->first();
+        $this->pkl->update([
+            'laporan' => $this->laporan,
+        ]);
+
+        $this->isEditing = false;
+
+        session()->flash('message', value: 'Laporan berhasil diubah');
     }
 }

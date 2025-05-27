@@ -1,5 +1,3 @@
-<div>
-    {{-- Success is as dangerous as failure. --}}
     <div class="p-4">
         <h2 class="text-lg font-semibold">Tambah Industri Baru</h2>
         <form wire:submit="store" class="mt-4 space-y-4">
@@ -76,5 +74,3 @@
 
         </form>
     </div>
-</div>
-{{-- The whole world belongs to you. --}}

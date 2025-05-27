@@ -17,7 +17,9 @@ class PklResource extends Resource
 {
     protected static ?string $model = Pkl::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
+    protected static ?string $navigationLabel = 'PKL';
+    protected static ?string $pluralModelLabel = 'Daftar PKL';
 
     public static function form(Form $form): Form
     {
@@ -70,11 +72,6 @@ class PklResource extends Resource
                     ->label('Tanggal Selesai')
                     ->sortable()
                     ->searchable(),
-                // Tables\Columns\TextColumn::make('siswa.status_lapor_pkl')
-                //     ->label('Status Lapor PKL')
-                //     ->badge(true)
-                //     ->formatStateUsing(fn($record): string => $record->status_lapor_pkl == 1 ? 'Lapor' : 'Belum Lapor')
-                //     ->color(fn($record): string => $record->status_lapor_pkl == 1 ? 'success' : 'danger'),
             ])
             ->filters([
                 //
@@ -90,7 +87,7 @@ class PklResource extends Resource
     {
         return [
             //
-            
+
         ];
     }
 

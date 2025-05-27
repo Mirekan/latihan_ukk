@@ -17,7 +17,9 @@ class SiswaResource extends Resource
 {
     protected static ?string $model = Siswa::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?string $navigationLabel = 'Siswa';
+    protected static ?string $pluralModelLabel = 'Daftar Siswa';
 
     public static function form(Form $form): Form
     {
@@ -57,7 +59,6 @@ class SiswaResource extends Resource
                     ->disk('public')
                     ->directory('siswa')
                     ->preserveFilenames()
-                    ->required(),
             ]);
     }
 
@@ -65,11 +66,6 @@ class SiswaResource extends Resource
     {
         return $table
             ->columns([
-                //
-                Tables\Columns\TextColumn::make('id')
-                    ->label('ID Siswa')
-                    ->sortable()
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('nama')
                     ->label('Nama')
                     ->sortable()
@@ -82,10 +78,11 @@ class SiswaResource extends Resource
                     ->label('Status Lapor PKL')
                     ->boolean()
                     ->trueIcon('heroicon-o-check-circle')
-                    ->falseIcon('heroicon-o-x-circle')
-                    ->sortable(),
-                Tables\Columns\ImageColumn::make('foto'),
-
+                    ->falseIcon('heroicon-o-x-circle'),
+                Tables\Columns\TextColumn::make('gender')
+                    ->label(label: 'Gender')
+                    ->sortable()
+                    ->searchable(),
             ])
             ->filters([
                 //
