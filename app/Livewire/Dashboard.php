@@ -22,7 +22,6 @@ class Dashboard extends Component
             'user' => $this->user,
             'siswa' => $this->siswa,
             'role' => $this->role,
-            'pkl' => $this->pkl,
         ]);
     }
 }

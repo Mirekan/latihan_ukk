@@ -78,11 +78,12 @@ class SiswaResource extends Resource
                     ->label('NIS')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('status_lapor_pkl')
+                Tables\Columns\IconColumn::make('status_lapor_pkl')
                     ->label('Status Lapor PKL')
-                    ->badge(true)
-                    ->formatStateUsing(fn($record): string => $record->status_lapor_pkl == 1 ? 'Lapor' : 'Belum Lapor')
-                    ->color(fn($record): string => $record->status_lapor_pkl == 1 ? 'success' : 'danger'),
+                    ->boolean()
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-x-circle')
+                    ->sortable(),
                 Tables\Columns\ImageColumn::make('foto'),
 
             ])
