@@ -1,71 +1,56 @@
 <div>
+    {{-- The whole world belongs to you. --}}
     @if (session()->has('message'))
         <div class="bg-green-500 text-white p-4 rounded-lg mb-4">
             {{ session('message') }}
         </div>
     @endif
-
     <div class="flex flex-col gap-2">
-        <h2 class="text-lg border-b p-2 self-start w-full">
-            Input Laporan PKL Anda
+        <h2 class="text-lg p-2 self-start w-full">
+            Daftar Laporan PKL
         </h2>
-        <div class="p">
-            @if ($siswa->status_lapor_pkl)
-                <div class="block bg-green-100 font-semibold text-green-400 p-4 rounded-lg w-full">Anda Sudah Mengumpulkan Laporan PKL</div>
-            @else
-                <div class="block bg-red-100 font-semibold text-red-400 p-4 rounded-lg w-full">Anda Belum Mengumpulkan laporan PKL</div>
-            @endif
+        <div class="flex gap-4">
+            <div class="flex-1">
+                <input type="text" wire:model.live="search" placeholder="Search..." class="w-full px-4 py-2 border border-gray-400 rounded-lg">
+            </div>
+            <button wire:click="openModal" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200">
+                Buat Laporan PKL
+            </button>
         </div>
-        <div>
-            @if ($siswa->status_lapor_pkl)
-                @if(!$isEditing)
-                    <div class="flex flex-col gap-4">
-                        <div class="flex">
-                            <div>
-                                <h3 class="text-lg font-semibold">Laporan PKL Anda</h3>
-                            <p class="text-sm text-gray-500">Update Terakhir:  <span class="font-semibold">{{ $pkl->updated_at->format('d M Y H:i') }}</span></p>
-                            </div>
-                            <div class="ml-auto">
-                                <button wire:click="editMode"
-                                        class="bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded-md">
-                                    Edit Laporan PKL
-                                </button>
-                            </div>
-                        </div>
-                        <div class="bg-gray-100 p-4 rounded-md border border-gray-300 md:min-h-48">
-                            <p class="text-sm">{{ $pkl->laporan }}</p>
-                        </div>
-                    </div>
-                @else
-                    <form wire:submit.prevent="updateReport" class="flex flex-col gap-4">
-                        <label for="laporan">Edit Laporan PKL Anda</label>
-
-                        <textarea wire:model="laporan"
-                                id="laporan"
-                                class="border border-gray-300 text-sm rounded-md p-1 md:h-36"
-                                required>{{ $pkl->laporan  }}</textarea>
-
-                        <button type="submit"
-                                class="bg-gray-400 hover:bg-gray-500 text-white py-1 rounded-md cursor-pointer">
-                            Update
-                        </button>
-                    </form>
-                @endif
-            @else
-            <form wire:submit.prevent="addReport" class="flex flex-col gap-4">
-                <label for="laporan">Tuliskan laporan PKL Anda di sini</label>
-
-                <textarea wire:model="laporan"
-                          id="laporan"
-                          class="border border-gray-300 text-sm rounded-md p-1 md:h-36"
-                          required></textarea>
-
-                <button type="submit"
-                        class="bg-gray-400 hover:bg-gray-500 text-white py-1 rounded-md cursor-pointer">
-                    Kirim
-                </button>
-            </form>
-            @endif
+        <div class="grid gap-4 mt-4">
+            <table class="w-full table-auto border border-gray-400 rounded-xl">
+                <thead class="">
+                    <tr class="border-b border-gray-400">
+                        <th class="px-4 py-2 text-left border-e border-gray-400">Nama</th>
+                        <th class="px-4 py-2 text-left border-e border-gray-400">Industri</th>
+                        <th class="px-4 py-2 text-left border-e border-gray-400">Guru</th>
+                        <th class="px-4 py-2 text-left border-e border-gray-400">Mulai</th>
+                        <th class="px-4 py-2 text-left border-e border-gray-400">Selesai</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($internships as $index => $internship)
+                        <tr class="border-t border-gray-400" style="cursor: pointer;">
+                            <td class="px-4 py-2 border-e border-gray-400">{{ $internship->siswa->nama }}</td>
+                            <td class="px-4 py-2 border-e border-gray-400">{{ $internship->industri->nama }}</td>
+                            <td class="px-4 py-2 border-e border-gray-400">{{ $internship->guru->nama }}</td>
+                            <td class="px-4 py-2 border-e border-gray-400">{{ $internship->mulai }}</td>
+                            <td class="px-4 py-2 border-e border-gray-400">{{ $internship->selesai }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="px-4 py-2 text-center">Belum ada data pengumpulan PKL</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
+    @if ($isOpen)
+        <div class="fixed inset-0 backdrop-blur-xs flex items-center justify-center z-50 " x-data="{ open: @entangle('isOpen') }" x-show="open" x-cloak>
+            <div class="w-full max-w-lg p-6 rounded shadow-lg relative bg-gray-50 ">
+                <livewire:pkl.create />
+            </div>
+        </div>
+    @endif
 </div>

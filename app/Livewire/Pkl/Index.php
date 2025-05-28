@@ -3,69 +3,49 @@
 namespace App\Livewire\Pkl;
 
 use App\Models\Industri;
+use App\Models\Pkl;
 use App\Models\Siswa;
 use Livewire\Component;
 
 class Index extends Component
 {
-    public $isEditing = false;
-    public $pkl, $industri, $guru, $siswa, $role, $user, $laporan;
+    public $isOpen = false;
+    public $isEdit = false;
+    public $pklId;
+    public $internships;
+    public $user;
+    public $siswa_login;
+    public $search = '';
+    public $listeners = ['openModal', 'closeModal', 'openEdit', 'closeEdit'];
     public function render()
     {
         $this->user = auth('web')->user();
-        $this->siswa = Siswa::where('email', $this->user->email)->first();
-        $this->role = $this->user->roles->first();
-        $this->industri = Industri::where('id', $this->siswa->pkl->pluck('industri_id'))->first();
-        $this->pkl = $this->siswa->pkl->first();
-
-        return view('livewire.pkl.index', [
-            'pkl' => $this->pkl,
-            'industri' => $this->industri,
-            'guru' => $this->guru,
-            'siswa' => $this->siswa,
-            'role' => $this->role,
-            'user' => $this->user,
-        ]);
+        $this->siswa_login = Siswa::with('pkl')->where('email', $this->user->email)->first();
+        $this->internships = Pkl::with(['siswa', 'industri'])
+            ->whereHas('siswa', function ($query) {
+                $query->where('nama', 'like', '%' . $this->search . '%');
+            })
+            ->orWhereHas('industri', function ($query) {
+                $query->where('nama', 'like', '%' . $this->search . '%');
+            })
+            ->get();
+        return view('livewire.pkl.index');
     }
-
-    public function addReport()
+    public function openModal(): void
     {
-        $this->validate([
-            'laporan' => 'required',
-        ]);
-
-        $this->siswa = Siswa::where('email', $this->user->email)->first();
-        $this->pkl = $this->siswa->pkl->first();
-
-        $this->pkl->update([
-            'laporan' => $this->laporan,
-        ]);
-
-        $this->siswa->update([
-            'status_lapor_pkl' => 1,
-        ]);
-
-        session()->flash('message', value: 'Laporan berhasil ditambahkan');
+        $this->isOpen = true;
     }
 
-    public function editMode()
+    public function closeModal()
     {
-        $this->isEditing = true;
+        $this->isOpen = false;
     }
-
-    public function updateReport()
-    {
-        $this->validate([
-            'laporan' => 'required',
-        ]);
-
-        $this->pkl = $this->siswa->pkl->first();
-        $this->pkl->update([
-            'laporan' => $this->laporan,
-        ]);
-
-        $this->isEditing = false;
-
-        session()->flash('message', value: 'Laporan berhasil diubah');
-    }
+    // public function openEdit()
+    // {
+    //     $this->isEdit = true;
+    // }
+    // public function closeEdit()
+    // {
+    //     $this->isEdit = false;
+    // }
 }

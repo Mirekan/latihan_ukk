@@ -50,8 +50,8 @@ class SiswaResource extends Resource
                 Forms\Components\Select::make('gender')
                     ->required()
                     ->options([
-                        'male' => 'Male',
-                        'female' => 'Female',
+                        "L" => 'Laki-laki',
+                        "P" => 'Perempuan',
                     ]),
                 Forms\Components\FileUpload::make('foto')
                     ->label('Upload Foto Siswa')
@@ -81,6 +81,10 @@ class SiswaResource extends Resource
                     ->falseIcon('heroicon-o-x-circle'),
                 Tables\Columns\TextColumn::make('gender')
                     ->label(label: 'Gender')
+                    ->formatStateUsing(fn($state) => match ($state) {
+                        'L' => 'Laki-laki',
+                        'P' => 'Perempuan',
+                    })
                     ->sortable()
                     ->searchable(),
             ])

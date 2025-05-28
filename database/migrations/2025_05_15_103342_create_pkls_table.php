@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('siswa_id')->constrained('siswas')->onDelete('cascade');
             $table->foreignId('guru_id')->constrained('gurus')->onDelete('cascade');
             $table->foreignId('industri_id')->constrained('industris')->onDelete('cascade');
-            $table->string('laporan')->nullable();
             $table->date('mulai');
             $table->date('selesai');
             $table->timestamps();

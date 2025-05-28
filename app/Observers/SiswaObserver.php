@@ -17,7 +17,7 @@ class SiswaObserver
             'name' => $siswa->nama,
             'email' => $siswa->email,
             'password' => bcrypt($siswa->nis),
-            'role' => 'siswa',
+            // 'role' => 'siswa',
         ]);
 
         $user->assignRole('siswa');

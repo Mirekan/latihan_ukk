@@ -6,12 +6,14 @@
         </div>
     @endif
     <div class="flex flex-col gap-2">
-        <h2 class="text-lgp-2 self-start w-full">
-            Daftar Perusahaan
+        <h2 class="text-lg p-2 self-start w-full">
+            Daftar Guru
         </h2>
         <div class="flex gap-4">
             <div class="flex-1">
                 <input type="text" wire:model.live="search" placeholder="Search..." class="w-full px-4 py-2 border border-gray-400 rounded-lg">
+            </div>
+            <div>
             </div>
         </div>
         <div class="grid gap-4 mt-4">
@@ -22,32 +24,25 @@
                         <th class="px-4 py-2 text-left border-e border-gray-400">Email</th>
                         <th class="px-4 py-2 text-left border-e border-gray-400">Kontak</th>
                         <th class="px-4 py-2 text-left border-e border-gray-400">Alamat</th>
-                        <th class="px-4 py-2 text-left border-e border-gray-400">Website</th>
+                        <th class="px-4 py-2 text-left border-e border-gray-400">NIP</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($companies as $index => $company)
+                    @forelse ($teachers as $index => $teacher)
                         <tr class="border-t border-gray-400">
-                            <td class="px-4 py-2 border-e border-gray-400">{{ $company->nama }}</td>
-                            <td class="px-4 py-2 border-e border-gray-400">{{ $company->email }}</td>
-                            <td class="px-4 py-2 border-e border-gray-400">{{ $company->kontak }}</td>
-                            <td class="px-4 py-2 border-e border-gray-400">{{ $company->alamat }}</td>
-                            <td class="px-4 py-2 border-e border-gray-400">{{ $company->website }}</td>
+                            <td class="px-4 py-2 border-e border-gray-400">{{ $teacher->nama }}</td>
+                            <td class="px-4 py-2 border-e border-gray-400">{{ $teacher->email }}</td>
+                            <td class="px-4 py-2 border-e border-gray-400">{{ $teacher->kontak }}</td>
+                            <td class="px-4 py-2 border-e border-gray-400">{{ $teacher->alamat }}</td>
+                            <td class="px-4 py-2 border-e border-gray-400">{{ $teacher->nip }}</td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-4 py-2 text-center">Tidak ada data Perusahaan</td>
+                            <td colspan="6" class="px-4 py-2 text-center">Tidak ada data guru</td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
     </div>
-    @if ($isOpen)
-        <div class="fixed inset-0 backdrop-blur-xs flex items-center justify-center z-50 " x-data="{ open: @entangle('isOpen') }" x-show="open" x-cloak>
-            <div class="w-full max-w-lg p-6 rounded shadow-lg relative bg-gray-50 ">
-                <livewire:company.create />
-            </div>
-        </div>
-    @endif
 </div>

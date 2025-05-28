@@ -14,9 +14,17 @@ class Dashboard extends Component
     public function render()
     {
         $this->user = auth('web')->user();
-        $this->siswa = Siswa::where('email', $this->user->email)->first();
         $this->role = $this->user->roles->first();
-        $this->industri = Industri::where('id', $this->siswa->pkl->pluck('industri_id'))->first();
+        // dd($this->role);
+        if ($this->role->name == 'super_admin') {
+            return view('livewire.dashboard', [
+                'user' => $this->user,
+                'role' => $this->role,
+            ]);
+        }
+
+        $this->siswa = Siswa::where('email', $this->user->email)->first();
+        // $this->industri = Industri::where('id', $this->siswa->pkl->pluck('industri_id'))->first();
 
         return view('livewire.dashboard', [
             'user' => $this->user,

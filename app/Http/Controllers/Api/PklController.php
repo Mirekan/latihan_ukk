@@ -62,7 +62,6 @@ class PklController extends Controller
             'industri_id' => 'sometimes|exists:industri,id',
             'guru_id' => 'sometimes|exists:guru,id',
             'mulai' => 'sometimes|date',
-            'laporan' => 'nullable|string',
             'selesai' => 'sometimes|date',
         ]);
 

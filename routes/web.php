@@ -6,9 +6,10 @@ use App\Livewire\Settings\Profile;
 use App\Livewire\Company\Index as CompanyIndex;
 use App\Livewire\Pkl\Index as PklIndex;
 use App\Livewire\Dashboard;
+use App\Livewire\Guru\Index as GuruIndex;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'role:siswa'])->group(function () {
+Route::middleware(['auth', 'role:siswa|super_admin'])->group(function () {
     Route::get('/', function () {
         return redirect()->route('dashboard');
     })->name('home');
@@ -18,6 +19,7 @@ Route::middleware(['auth', 'role:siswa'])->group(function () {
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 
     Route::get('dashboard', Dashboard::class)->name('dashboard');
+    Route::get('guru', GuruIndex::class)->name('guru.index');
     Route::get('company', CompanyIndex::class)->name('company.index');
     Route::get('pkl', PklIndex::class)->name('pkl.index');
 });
