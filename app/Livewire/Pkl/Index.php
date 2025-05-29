@@ -35,17 +35,15 @@ class Index extends Component
     {
         $this->isOpen = true;
     }
+    public function openEdit($id): void
+    {
+        $this->pklId = $id;
+        $this->isEdit = true;
+    }
 
     public function closeModal()
     {
         $this->isOpen = false;
+        $this->isEdit = false;
     }
-    // public function openEdit()
-    // {
-    //     $this->isEdit = true;
-    // }
-    // public function closeEdit()
-    // {
-    //     $this->isEdit = false;
-    // }
 }

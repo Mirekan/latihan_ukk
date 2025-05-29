@@ -6,12 +6,15 @@
         </div>
     @endif
     <div class="flex flex-col gap-2">
-        <h2 class="text-lgp-2 self-start w-full">
+        <h2 class="text-lg p-2 self-start w-full">
             Daftar Perusahaan
         </h2>
         <div class="flex gap-4">
             <div class="flex-1">
                 <input type="text" wire:model.live="search" placeholder="Search..." class="w-full px-4 py-2 border border-gray-400 rounded-lg">
+            </div>
+            <div>
+                <button wire:click="openModal" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Tambah Perusahaan</button>
             </div>
         </div>
         <div class="grid gap-4 mt-4">

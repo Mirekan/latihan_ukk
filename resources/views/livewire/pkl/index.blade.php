@@ -30,7 +30,7 @@
                 </thead>
                 <tbody>
                     @forelse ($internships as $index => $internship)
-                        <tr class="border-t border-gray-400" style="cursor: pointer;">
+                        <tr class="border-t border-gray-400" style="cursor: pointer;" wire:click='openEdit({{ $internship->id }})'>
                             <td class="px-4 py-2 border-e border-gray-400">{{ $internship->siswa->nama }}</td>
                             <td class="px-4 py-2 border-e border-gray-400">{{ $internship->industri->nama }}</td>
                             <td class="px-4 py-2 border-e border-gray-400">{{ $internship->guru->nama }}</td>
@@ -50,6 +50,13 @@
         <div class="fixed inset-0 backdrop-blur-xs flex items-center justify-center z-50 " x-data="{ open: @entangle('isOpen') }" x-show="open" x-cloak>
             <div class="w-full max-w-lg p-6 rounded shadow-lg relative bg-gray-50 ">
                 <livewire:pkl.create />
+            </div>
+        </div>
+    @endif
+    @if ($isEdit)
+        <div class="fixed inset-0 backdrop-blur-xs flex items-center justify-center z-50 " x-data="{ open: @entangle('isEdit') }" x-show="open" x-cloak>
+            <div class="w-full max-w-lg p-6 rounded shadow-lg relative bg-gray-50 ">
+                <livewire:pkl.edit :pklId="$pklId" />
             </div>
         </div>
     @endif

@@ -13,8 +13,6 @@
             <div class="flex-1">
                 <input type="text" wire:model.live="search" placeholder="Search..." class="w-full px-4 py-2 border border-gray-400 rounded-lg">
             </div>
-            <div>
-            </div>
         </div>
         <div class="grid gap-4 mt-4">
             <table class="w-full table-auto border border-gray-400 rounded-xl">
