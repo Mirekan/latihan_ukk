@@ -47,7 +47,7 @@ class GuruPolicy
      */
     public function delete(User $user, Guru $guru): bool
     {
-        return $user->can('delete_guru') && !$guru->pkl()->exists();
+        return $user->can('delete_guru');
     }
 
     /**

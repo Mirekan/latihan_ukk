@@ -4,32 +4,32 @@
             {{ session('error') }}
         </div>
     @endif
-    <h2 class="text-lg font-semibold">Buat Laporan PKL</h2>
+    <h2 class="text-lg font-semibold dark:text-gray-800">Buat Laporan PKL</h2>
     <form wire:submit="store" class="mt-4 space-y-4 flex flex-col gap-4">
-        <select wire:model="siswaId" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-            <option value="">Pilih Siswa</option>
-            <option value="{{ $student->id }}">{{ $student->nama }}</option>
+        <select wire:model="siswaId" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm dark:text-gray-800">
+            <option value="" class="dark:text-gray-800">Pilih Siswa</option>
+            <option value="{{ $student->id }}" class="dark:text-gray-800">{{ $student->nama }}</option>
         </select>
-        <select wire:model="industriId" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-            <option value="">Pilih Industri</option>
+        <select wire:model="industriId" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm dark:text-gray-800">
+            <option value="" class="dark:text-gray-800">Pilih Industri</option>
             @foreach ($industries as $industry)
-                <option value="{{ $industry->id }}">{{ $industry->nama }}</option>
+                <option value="{{ $industry->id }}" class="dark:text-gray-800">{{ $industry->nama }}</option>
             @endforeach
         </select>
-        <select wire:model="guruId" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-            <option value="">Pilih Guru</option>
+        <select wire:model="guruId" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm dark:text-gray-800">
+            <option value="" class="dark:text-gray-800">Pilih Guru</option>
             @foreach ($teachers as $teacher)
-                <option value="{{ $teacher->id }}">{{ $teacher->nama }}</option>
+                <option value="{{ $teacher->id }}" class="dark:text-gray-800">{{ $teacher->nama }}</option>
             @endforeach
         </select>
         <div class="flex gap-4">
             <div class="flex-1">
                 <label for="mulai" class="block text-sm font-medium text-gray-700">Tanggal Mulai</label>
-                <input type="date" wire:model="mulai" id="mulai" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                <input type="date" wire:model="mulai" id="mulai" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm dark:text-gray-800">
             </div>
             <div class="flex-1">
                 <label for="selesai" class="block text-sm font-medium text-gray-700">Tanggal Selesai</label>
-                <input type="date" wire:model="selesai" id="selesai" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                <input type="date" wire:model="selesai" id="selesai" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm dark:text-gray-800">
             </div>
         </div>
         <div class="flex items-center justify-end mt-4">
