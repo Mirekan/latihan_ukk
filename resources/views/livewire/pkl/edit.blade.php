@@ -4,7 +4,7 @@
             {{ session('error') }}
         </div>
     @endif
-    <h2 class="text-lg font-semibold">Buat Laporan PKL</h2>
+    <h2 class="text-lg font-semibold">Edit Laporan PKL</h2>
     <form wire:submit="update" class="mt-4 space-y-4 flex flex-col gap-4">
         <select wire:model="siswaId" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             <option value="">Pilih Siswa</option>
