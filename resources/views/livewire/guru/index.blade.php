@@ -39,6 +39,7 @@
                             <td colspan="6" class="px-4 py-2 text-center">Tidak ada data guru</td>
                         </tr>
                     @endforelse
+                    {{$teachers->links()}}
                 </tbody>
             </table>
         </div>

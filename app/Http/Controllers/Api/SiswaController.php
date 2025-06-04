@@ -24,13 +24,13 @@ class SiswaController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'email' => 'required|email|unique:siswa,email',
+            'email' => 'required|email|unique:siswas,email',
             'nis' => 'required|string|max:20',
             'alamat' => 'nullable|string|max:255',
             'kontak' => 'nullable|string|max:15',
         ]);
 
-        $student = Siswa::create($request->validated());
+        $student = Siswa::create($request->all());
 
         return response()->json(['message' => 'Record siswa berhasil dibuat'], 201);
     }
@@ -52,6 +52,14 @@ class SiswaController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'nama' => 'sometimes|required|string|max:255',
+            'email' => 'sometimes|required|email|unique:siswas,email,' . $id,
+            'nis' => 'sometimes|required|string|max:20',
+            'alamat' => 'nullable|string|max:255',
+            'kontak' => 'nullable|string|max:15',
+        ]);
+
         $student = Siswa::find($id);
         if (!$student) {
             return response()->json(['message' => 'Student not found'], 404);

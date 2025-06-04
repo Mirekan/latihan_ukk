@@ -6,6 +6,7 @@ use App\Models\Guru;
 use App\Models\Industri;
 use App\Models\Pkl;
 use App\Models\Siswa;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -41,6 +42,13 @@ class Create extends Component
             'mulai' => 'required|date',
             'selesai' => 'required|date|after_or_equal:mulai',
         ]);
+
+        $mulaiDate = Carbon::parse($this->mulai);
+        $selesaiDate = Carbon::parse($this->selesai);
+        if ($mulaiDate->diffInDays($selesaiDate) < 90) {
+            session()->flash('error', value: 'Lama PKL minimal 3 bulan.');
+            return;
+        }
 
         DB::beginTransaction();
         try {

@@ -47,7 +47,7 @@ class IndustriPolicy
      */
     public function delete(User $user, Industri $industri): bool
     {
-        return $user->can('delete_industri');
+        return $user->can('delete_industri') && !$industri->pkl()->exists();
     }
 
     /**

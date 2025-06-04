@@ -45,6 +45,20 @@ class GuruResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('kontak')
                     ->label('Kontak')
+                    ->prefixIcon('heroicon-o-phone')
+                    ->prefix('+62')
+                    ->dehydrateStateUsing(function ($state) {
+                        if (str_starts_with($state, '0')) {
+                            return '62' . substr($state, 1);
+                        }
+                        return $state;
+                    })
+                    ->afterStateHydrated(function (Forms\Get $get, Forms\Set $set) {
+                        $kontak = $get('kontak');
+                        if (str_starts_with($kontak, '62')) {
+                            $set('kontak', '0' . substr($kontak, 2));
+                        }
+                    })
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('gender')

@@ -40,6 +40,14 @@ class Edit extends Component
             'selesai' => 'required|date|after_or_equal:mulai',
         ]);
 
+        $mulaiDate = Carbon::parse($this->mulai);
+        $selesaiDate = Carbon::parse($this->selesai);
+        if ($mulaiDate->diffInDays($selesaiDate) < 90) {
+            session()->flash('error', value: 'Lama PKL minimal 3 bulan.');
+            return;
+        }
+
+
         $this->internship->update([
             'siswa_id' => $this->siswaId,
             'industri_id' => $this->industriId,

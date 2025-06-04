@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pkl;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PklController extends Controller
@@ -23,19 +24,24 @@ class PklController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'siswa_id' => 'required|exists:siswa,id',
-            'industri_id' => 'required|exists:industri,id',
-            'guru_id' => 'required|exists:guru,id',
+            'siswa_id' => 'required|exists:siswas,id',
+            'industri_id' => 'required|exists:industris,id',
+            'guru_id' => 'required|exists:gurus,id',
             'mulai' => 'required|date',
-            'laporan' => 'nullable|string',
-            'selesai' => 'required|date',
+            'selesai' => 'required|date|after_or_equal:mulai',
         ]);
+        $mulaiDate = Carbon::parse($request->mulai);
+        $selesaiDate = Carbon::parse($request->selesai);
+        if ($mulaiDate->diffInDays($selesaiDate) < 90) {
+            return response()->json(['message' => 'Lama PKL minimal 3 bulan.'], 422);
+        }
 
         $internship = Pkl::create($request->all());
         return response()->json(['message' => 'Record PKL berhasil dibuat'], 201);
     }
 
     /**
+     *
      * Display the specified resource.
      */
     public function show(string $id)
@@ -58,12 +64,34 @@ class PklController extends Controller
         }
 
         $request->validate([
-            'siswa_id' => 'sometimes|exists:siswa,id',
-            'industri_id' => 'sometimes|exists:industri,id',
-            'guru_id' => 'sometimes|exists:guru,id',
+            'siswa_id' => 'sometimes|exists:siswas,id',
+            'industri_id' => 'sometimes|exists:industris,id',
+            'guru_id' => 'sometimes|exists:gurus,id',
             'mulai' => 'sometimes|date',
             'selesai' => 'sometimes|date',
         ]);
+        if ($request->has('mulai') && !$request->has('selesai')) {
+            $mulaiDate = Carbon::parse($request->mulai);
+            $selesaiDate = Carbon::parse($internship->selesai);
+            if ($mulaiDate->diffInDays($selesaiDate) < 90) {
+                return response()->json(['message' => 'Lama PKL minimal 3 bulan.'], 422);
+            }
+        }
+        if ($request->has('selesai') && !$request->has('mulai')) {
+            $selesaiDate = Carbon::parse($request->selesai);
+            $mulaiDate = Carbon::parse($internship->mulai);
+            if ($mulaiDate->diffInDays($selesaiDate) < 90) {
+                return response()->json(['message' => 'Lama PKL minimal 3 bulan.'], 422);
+            }
+        }
+
+        if ($request->has('mulai') && $request->has('selesai')) {
+            $mulaiDate = Carbon::parse($request->mulai);
+            $selesaiDate = Carbon::parse($request->selesai);
+            if ($mulaiDate->diffInDays($selesaiDate) < 90) {
+                return response()->json(['message' => 'Lama PKL minimal 3 bulan.'], 422);
+            }
+        }
 
         $internship->update($request->all());
         return response()->json(['message' => 'PKL updated successfully']);

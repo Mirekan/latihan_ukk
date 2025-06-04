@@ -47,7 +47,7 @@ class SiswaPolicy
      */
     public function delete(User $user, Siswa $siswa): bool
     {
-        return $user->can('delete_siswa');
+        return $user->can('delete_siswa') && !$siswa->pkl()->exists();
     }
 
     /**

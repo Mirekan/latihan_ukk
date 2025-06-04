@@ -42,6 +42,7 @@
                             <td colspan="6" class="px-4 py-2 text-center">Tidak ada data Perusahaan</td>
                         </tr>
                     @endforelse
+                    {{ $companies->links() }}
                 </tbody>
             </table>
         </div>

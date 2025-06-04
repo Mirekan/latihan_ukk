@@ -4,18 +4,24 @@ namespace App\Livewire\Guru;
 
 use App\Models\Guru;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
-    public $teachers;
+    use WithPagination;
     public $search = '';
     public function render()
     {
-        $this->teachers = Guru::where('nama', 'like', '%' . $this->search . '%')
+        $teachers = Guru::where('nama', 'like', '%' . $this->search . '%')
             ->orWhere('nip', 'like', '%' . $this->search . '%')
             // ->orderBy('nama', 'asc')
-            ->get();
+            ->paginate(5);
 
-        return view('livewire.guru.index');
+        return view(
+            'livewire.guru.index',
+            [
+                'teachers' => $teachers,
+            ]
+        );
     }
 }

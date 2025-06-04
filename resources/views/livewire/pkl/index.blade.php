@@ -13,9 +13,15 @@
             <div class="flex-1">
                 <input type="text" wire:model.live="search" placeholder="Search..." class="w-full px-4 py-2 border border-gray-400 rounded-lg">
             </div>
-            <button wire:click="openModal" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200">
-                Buat Laporan PKL
-            </button>
+            @if ($siswa_pkl)
+                <button wire:click='openEdit({{ $siswa_pkl->id }})' class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
+                    Edit Laporan PKL
+                </button>
+            @else
+                <button wire:click='openModal' class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                    Tambah Laporan PKL
+                </button>
+            @endif
         </div>
         <div class="grid gap-4 mt-4">
             <table class="w-full table-auto border border-gray-400 rounded-xl">
@@ -30,7 +36,7 @@
                 </thead>
                 <tbody>
                     @forelse ($internships as $index => $internship)
-                        <tr class="border-t border-gray-400" style="cursor: pointer;" wire:click='openEdit({{ $internship->id }})'>
+                        <tr class="border-t border-gray-400">
                             <td class="px-4 py-2 border-e border-gray-400">{{ $internship->siswa->nama }}</td>
                             <td class="px-4 py-2 border-e border-gray-400">{{ $internship->industri->nama }}</td>
                             <td class="px-4 py-2 border-e border-gray-400">{{ $internship->guru->nama }}</td>
@@ -42,6 +48,7 @@
                             <td colspan="6" class="px-4 py-2 text-center">Belum ada data pengumpulan PKL</td>
                         </tr>
                     @endforelse
+                    {{ $internships->links() }}
                 </tbody>
             </table>
         </div>

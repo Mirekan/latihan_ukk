@@ -3,15 +3,15 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SiswaResource\Pages;
-use App\Filament\Resources\SiswaResource\RelationManagers;
 use App\Models\Siswa;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class SiswaResource extends Resource
 {
@@ -32,6 +32,7 @@ class SiswaResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->label('Email Siswa')
+                    ->prefixIcon('heroicon-o-envelope')
                     ->required()
                     ->email()
                     ->maxLength(255),
@@ -45,7 +46,22 @@ class SiswaResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('kontak')
                     ->label('Kontak Siswa')
+                    ->prefixIcon('heroicon-o-phone')
+                    ->prefix('+62')
                     ->required()
+                    ->tel()
+                    ->dehydrateStateUsing(function ($state) {
+                        if (str_starts_with($state, '0')) {
+                            return '62' . substr($state, 1);
+                        }
+                        return $state;
+                    })
+                    ->afterStateHydrated(function (Forms\Get $get, Forms\Set $set) {
+                        $kontak = $get('kontak');
+                        if (str_starts_with($kontak, '62')) {
+                            $set('kontak', '0' . substr($kontak, 2));
+                        }
+                    })
                     ->maxLength(255),
                 Forms\Components\Select::make('gender')
                     ->required()
@@ -81,10 +97,11 @@ class SiswaResource extends Resource
                     ->falseIcon('heroicon-o-x-circle'),
                 Tables\Columns\TextColumn::make('gender')
                     ->label(label: 'Gender')
-                    ->formatStateUsing(fn($state) => match ($state) {
-                        'L' => 'Laki-laki',
-                        'P' => 'Perempuan',
-                    })
+                    ->formatStateUsing(fn($state) => DB::select('SELECT ketGender(?) AS gender', [$state])[0]->gender)
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('kontak')
+                    ->label('Kontak')
                     ->sortable()
                     ->searchable(),
             ])
@@ -104,7 +121,23 @@ class SiswaResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->action(function (Collection $records) {
+                            $deleteable = $records->filter(function (Siswa $record) {
+                                return $record->pkl->isEmpty();
+                            });
+                            if ($deleteable->isEmpty()) {
+                                Notification::make()
+                                    ->title('No deletable records')
+                                    ->danger()
+                                    ->body('None of the selected students can be deleted because they have PKL records.')
+                                    ->send();
+                                return;
+                            }
+                            $deleteable->each(function (Siswa $record) {
+                                $record->delete();
+                            });
+                        })
                 ]),
             ]);
     }

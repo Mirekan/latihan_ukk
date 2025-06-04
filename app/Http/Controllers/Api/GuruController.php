@@ -24,13 +24,13 @@ class GuruController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'email' => 'required|email|unique:guru,email',
+            'email' => 'required|email|unique:gurus,email',
             'nip' => 'required|string|max:20',
             'alamat' => 'nullable|string|max:255',
             'kontak' => 'nullable|string|max:15',
         ]);
 
-        $teacher = Guru::create($request->validated());
+        $teacher = Guru::create($request->all());
 
         return response()->json(['message' => 'Record guru berhasil dibuat'], 201);
     }

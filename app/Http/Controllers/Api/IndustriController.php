@@ -23,7 +23,17 @@ class IndustriController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'bidang_usaha' => 'required|string|max:255',
+            'alamat' => 'required|string|max:255',
+            'kontak' => 'required|string|max:15',
+            'email' => 'required|email|max:255|exists:industris,email',
+            'website' => 'required|url|max:255',
+        ]);
+
+        $industry = Industri::create($request->all());
+        return response()->json(['message' => 'Industry created successfully', 'industry' => $industry], 201);
     }
 
     /**
@@ -44,7 +54,15 @@ class IndustriController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nama' => 'sometimes|required|string|max:255',
+            'bidang_usaha' => 'sometimes|required|string|max:255',
+            'alamat' => 'sometimes|required|string|max:255',
+            'kontak' => 'sometimes|required|string|max:15',
+            'email' => 'sometimes|required|email|max:255|exists:industris,email',
+            'website' => 'sometimes|required|url|max:255',
+        ]);
+
         $industry = Industri::find($id);
         if (!$industry) {
             return response()->json(['message' => 'Industry not found'], 404);
