@@ -56,7 +56,7 @@ class GuruResource extends Resource
                     ->afterStateHydrated(function (Forms\Get $get, Forms\Set $set) {
                         $kontak = $get('kontak');
                         if (str_starts_with($kontak, '62')) {
-                            $set('kontak', '0' . substr($kontak, 2));
+                            $set('kontak', '' . substr($kontak, 2));
                         }
                     })
                     ->required()
@@ -98,6 +98,7 @@ class GuruResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('kontak')
                     ->label('Kontak')
+                    ->prefix('+62')
                     ->sortable()
                     ->searchable(),
             ])
