@@ -51,10 +51,20 @@ class SiswaResource extends Resource
                     ->required()
                     ->tel()
                     ->dehydrateStateUsing(function ($state) {
-                        if (str_starts_with($state, '0')) {
-                            return '62' . substr($state, 1);
+                        $state = trim($state);
+
+                        // If it already starts with +62, return as is
+                        if (str_starts_with($state, '+62')) {
+                            return $state;
                         }
-                        return $state;
+
+                        // If it starts with 0, replace it with +62
+                        if (str_starts_with($state, '0')) {
+                            return '+62' . substr($state, 1);
+                        }
+
+                        // If it starts with anything else, just prepend +62
+                        return '+62' . $state;
                     })
                     ->afterStateHydrated(function (Forms\Get $get, Forms\Set $set) {
                         $kontak = $get('kontak');
